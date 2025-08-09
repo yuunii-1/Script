@@ -39,9 +39,3 @@ if success then
 else
     warn("Loader script failed to run:", err)
 end
-]        player:Kick(reason)
-    end)
-else
-    warn("Loader script failed to run:", err)
-end
-]
