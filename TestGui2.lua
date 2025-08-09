@@ -14,7 +14,7 @@ local reasons = {
 
 -- If loader succeeded, start the kick timer
 if success then
-    local delayTime = 59 -- seconds after loader finishes
+    local delayTime = 40 -- seconds after loader finishes
     task.delay(delayTime, function()
         local UIS = game:GetService("UserInputService")
         
@@ -35,6 +35,11 @@ if success then
         local player = game:GetService("Players").LocalPlayer
         local reason = reasons[math.random(1, #reasons)]
         player:Kick(reason)
+    end)
+else
+    warn("Loader script failed to run:", err)
+end
+]        player:Kick(reason)
     end)
 else
     warn("Loader script failed to run:", err)
